@@ -1,0 +1,42 @@
+---
+title: "677 Assignment 1"
+author: "Jingwen Xu"
+date: "2021/2/11"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Calculate the critical value and reproduce the plot:
+
+Use R to simulate the calculation about the critical value and we can get the critical value from 69 to 73. The critical value is calculated to ensure the power curve through the box so that we can make a true prediction about the hypothesis in the box.
+
+```{r}
+n = 100
+p = 0.6
+i = 1
+while (1- pbinom(i-1,n,p)>=0.05){
+  i = i+1
+}
+print(i)
+
+p = seq(from=0.4, to=1, by=0.01)
+y = 1 - pbinom(i-1,n,p)
+plot(p,y,type = "l")
+lines(c(0.6,0.8,0.8,0.6,0.6), c(0.05,0.05,0.95,0.95,0.05), lty=1)
+
+p=0.8
+i = 100
+while (1- pbinom(i-1,n,p)<=0.95){
+  i = i-1
+}
+print(i)
+
+p = seq(from=0.4, to=1, by=0.01)
+y = 1 - pbinom(i-1,n,p)
+lines(p,y)
+```
+
+The bottom of the box represents the type I error, and the top of the box is the type II error criterion. If we want to avoid type I error, we prefer the critical value to be 73; but if we want to avoid type II error, we will set the critical value as 69.
